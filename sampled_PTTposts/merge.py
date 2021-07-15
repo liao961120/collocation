@@ -23,7 +23,7 @@ def parse_vrt(fp):
 # %%
 seed(100)
 post_pool = list(p.rglob("./*/*.vrt"))
-post_pool = sample(post_pool, 500)
+post_pool = sample(post_pool, 700)
 
 with open("../sampled_PTTposts.txt", "w") as f:
     for fp in post_pool:
