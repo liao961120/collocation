@@ -102,7 +102,6 @@ class Collocation:
             # Set window size to scan through
             win_left = max(i - self.left_window, 0)
             win_right = min(i + self.right_window + 1, s_len)
-            this = i + win_left
             for collocate in sent[win_left:i] + sent[i+1:win_right]:
                 # Count node marginal frequency
                 if node not in self.node_marginal_freq:
