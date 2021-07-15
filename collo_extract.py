@@ -1,4 +1,3 @@
-#%%
 from math import log2, log
 
 with open("sampled_PTTposts.txt", encoding="utf-8") as f:
@@ -21,7 +20,7 @@ class Collocation:
         
         # Frequency info for calculating collocation indicies
         self.cooccur_freq = {}
-        self.seed_marginal_freq = {}
+        self.node_marginal_freq = {}
         self.collocate_marginal_freq = {}
         self.total = 0
 
@@ -34,23 +33,23 @@ class Collocation:
         # Count frequencies
         for sent in corpus:
             self.count_freq_sent(sent)
-        self.total = sum(self.seed_marginal_freq.values())
+        self.total = sum(self.node_marginal_freq.values())
 
 
-    def get_topn_collocates(self, seed, n=10, by="Gsq"):
+    def get_topn_collocates(self, node, n=10, by="Gsq"):
         subset = {}
         for collocate in self.words:
-            stats = self.association(seed, collocate, self.cutoff)
+            stats = self.association(node, collocate, self.cutoff)
             if stats is not None:
                 subset[collocate] = stats
         return sorted(subset.items(), key=lambda x: x[1][by], reverse=True)[:n]
 
 
-    def association(self, seed, collocate, cutoff):
+    def association(self, node, collocate, cutoff):
         # Retrieve frequencies
-        R1 = self.seed_marginal_freq.get(seed)
+        R1 = self.node_marginal_freq.get(node)
         C1 = self.collocate_marginal_freq.get(collocate)
-        O11 = self.cooccur_freq.get((seed, collocate))
+        O11 = self.cooccur_freq.get((node, collocate))
 
         if O11 is None or R1 is None or C1 is None: 
             return None
@@ -96,19 +95,19 @@ class Collocation:
 
     def count_freq_sent(self, sent):
         s_len = len(sent)
-        for i, seed in enumerate(sent):
+        for i, node in enumerate(sent):
             # Record word
-            self.words.add(seed)
+            self.words.add(node)
 
             # Set window size to scan through
             win_left = max(i - self.left_window, 0)
             win_right = min(i + self.right_window + 1, s_len)
             this = i + win_left
             for collocate in sent[win_left:i] + sent[i+1:win_right]:
-                # Count seed marginal frequency
-                if seed not in self.seed_marginal_freq:
-                    self.seed_marginal_freq[seed] = 0
-                self.seed_marginal_freq[seed] += 1
+                # Count node marginal frequency
+                if node not in self.node_marginal_freq:
+                    self.node_marginal_freq[node] = 0
+                self.node_marginal_freq[node] += 1
 
                 # Count collocate marginal frequency
                 if collocate not in self.collocate_marginal_freq:
@@ -116,10 +115,8 @@ class Collocation:
                 self.collocate_marginal_freq[collocate] += 1
 
                 # Count cooccurance frequency
-                k = (seed, collocate)
+                k = (node, collocate)
                 if k not in self.cooccur_freq:
                     self.cooccur_freq[k] = 0
                 self.cooccur_freq[k] += 1
     
-
-# %%
