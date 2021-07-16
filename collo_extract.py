@@ -99,7 +99,7 @@ class Collocation:
             # Record word
             self.words.add(node)
 
-            # Set window size to scan through
+            # Set window to scan through
             win_left = max(i - self.left_window, 0)
             win_right = min(i + self.right_window + 1, s_len)
             for collocate in sent[win_left:i] + sent[i+1:win_right]:
