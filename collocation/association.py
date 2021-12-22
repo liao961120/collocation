@@ -3,22 +3,6 @@ from scipy import spatial
 from .fisher_exact import test1t as fisher_exact
 
 
-def cossim(x, y) -> float:
-    """[summary]
-    Parameters
-    ----------
-    x : [type]
-        [description]
-    y : [type]
-        [description]
-    Returns
-    -------
-    float
-        [description]
-    """
-    return 1 - spatial.distance.cosine(x, y)
-
-
 # Association measures
 def MI(O11, O12, O21, O22, E11, E12, E21, E22):
     return log2(O11 / E11)
