@@ -1,2 +1,7 @@
-sampled_PTTposts/*/*.vrt
-test*
+data/cilin_tree.yaml
+*.egg-info
+build
+dist
+__pycache__
+.ipynb_checkpoints
+sampled_PTTposts.txt
