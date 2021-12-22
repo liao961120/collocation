@@ -17,7 +17,6 @@ class Collocation:
         self.C1_all = {}  # new
         self.count_freq(corpus)
         self.N = sum(self.cooccur_freq.values())  # new
-        self.count_freq(corpus)
     
 
     def get_topn_collocates(self, node, cutoff, n=10, alpha=0, 
