@@ -1,11 +1,10 @@
 from math import log2, log
-from scipy import spatial
 from .fisher_exact import test1t as fisher_exact
 
 
-# Association measures
 def MI(O11, O12, O21, O22, E11, E12, E21, E22):
     return log2(O11 / E11)
+
 
 def Xsq(O11, O12, O21, O22, E11, E12, E21, E22):
     val = (O11 - E11)**2 / E11 + (O12 - E12)**2 / E12 + (O21 - E21)**2 / E21 + (O22 - E22)**2 / E22
@@ -13,26 +12,32 @@ def Xsq(O11, O12, O21, O22, E11, E12, E21, E22):
         val = -val
     return val
 
+
 def Gsq(O11, O12, O21, O22, E11, E12, E21, E22):
     val = 2 * (GsqT(O11, E11) + GsqT(O12, E12) + GsqT(O21, E21) + GsqT(O22, E22))
     if O11 < E11:
         val = -val
     return val
 
+
 def Dice(O11, O12, O21, O22, E11, E12, E21, E22):
     return 2 * O11 / (O11 + O12 + O11 + O21)
+
 
 def DeltaP21(O11, O12, O21, O22, E11, E12, E21, E22):
     return O11 / (O11 + O12) - O21 / (O21 + O22)
 
+
 def DeltaP12(O11, O12, O21, O22, E11, E12, E21, E22):
     return O11 / (O11 + O21) - O12 / (O12 + O22)
+
 
 def FisherExact(O11, O12, O21, O22, E11, E12, E21, E22):
     pval = fisher_exact(O11, O12, O21, O22)
     if O11 < E11: 
         pval *= -1
     return pval
+
 
 def FisherAttract(O11, O12, O21, O22, E11, E12, E21, E22):
     pval = fisher_exact(O11, O12, O21, O22)
@@ -46,6 +51,7 @@ def FisherAttract(O11, O12, O21, O22, E11, E12, E21, E22):
 def GsqT(O, E):
     if O == 0: return 0
     return O * log(O/E)
+
 
 def additive_smooth(O11, O12, O21, O22, alpha=0.1):
     O11 += alpha
