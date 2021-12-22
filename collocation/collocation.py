@@ -20,7 +20,35 @@ class Collocation:
         self.count_freq(corpus)
     
 
-    def get_topn_collocates(self, node, cutoff, n=10, alpha=0, by="MI", chinese_only=True):
+    def get_topn_collocates(self, node, cutoff, n=10, alpha=0, 
+                            chinese_only=True, by="MI"):
+        """Retrieve top n collocates of a node
+
+        Parameters
+        ----------
+        node : str
+            Pattern describing the node word
+        cutoff : int
+            The minimum number of coocurrences between the node and a collocate
+            needed for the pair to be assign association scores
+        n : int, optional
+            The number of collocates to return, by default 10
+        alpha : int, optional
+            Additive smoothing parameter, by default 0. This is usually set
+            between 0 and 1
+        by : str, optional
+            The association measure used for sorting, by default "MI"
+            Possible values are the names of the functions in
+            :meth:`Collocation.association_measures`
+        chinese_only : bool, optional
+            Whether to return only collocates that have at least one Chinese
+            character, by default True
+
+        Returns
+        -------
+        list
+            A list of tuples (node, collocate, associations)
+        """
         node = re.compile(node)
         candidates = []
         for node_, collo_ in self.cooccur_freq:

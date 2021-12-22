@@ -38,7 +38,7 @@ with open("sampled_PTTposts.txt", encoding="utf-8") as f:
 # Initialize
 c = Collocation(corpus, left_window=3, right_window=3)
 # Query
-c.get_topn_collocates("[臺台]灣", cutoff=3, n=3)
+c.get_topn_collocates("[臺台]灣", cutoff=3, n=3, by="MI", chinese_only=True)
 [('臺灣', '主體性',
   {'MI': 10.260437705682913,
    'Xsq': 4899.751374916442,
