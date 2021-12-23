@@ -26,7 +26,7 @@ class Collocation:
         Parameters
         ----------
         node : str
-            Pattern describing the node word
+            Regex pattern describing the node word
         cutoff : int
             The minimum number of coocurrences between the node and a collocate
             needed for the pair to be assign association scores

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="collocation", # Replace with your own username
-    version="0.0.5",
+    version="0.0.6",
     author="Yongfu Liao",
     author_email="liao961120@gmail.com",
     description="Collocation extraction from segmented texts",

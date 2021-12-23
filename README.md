@@ -2,7 +2,7 @@ Collocation
 =================
 
 
-## Install
+## Installation
 
 ```bash
 pip install collocation
@@ -38,7 +38,7 @@ with open("sampled_PTTposts.txt", encoding="utf-8") as f:
 # Initialize
 c = Collocation(corpus, left_window=3, right_window=3)
 # Query
-c.get_topn_collocates("[臺台]灣", cutoff=3, n=3, by="MI", chinese_only=True)
+>>> c.get_topn_collocates("[臺台]灣", cutoff=3, n=3, by="MI", chinese_only=True)
 [('臺灣', '國立',
   {'MI': 9.801006087045614,
    'Xsq': 3560.8618187084653,
@@ -63,4 +63,35 @@ c.get_topn_collocates("[臺台]灣", cutoff=3, n=3, by="MI", chinese_only=True)
    'DeltaP21': 0.07617749434551055,
    'DeltaP12': 0.046682984348090525,
    'RawCount': 11})]
+
+# Acess documentation of parameters
+help(c.get_topn_collocates)
+```
+
+### Custom Association Measures
+
+```python
+from math import log2
+from collocation.association import FisherAttract, Dice
+
+
+def logDice(O11, O12, O21, O22, E11, E12, E21, E22):
+    D = Dice(O11, O12, O21, O22, E11, E12, E21, E22)
+    return 14 + log2(D)
+
+c.association_measures = [FisherAttract, logDice]
+
+>>> c.get_topn_collocates("[臺台]灣", cutoff=3, n=3, by="logDice", chinese_only=True)
+[('臺灣', '大學',
+  {'FisherAttract': 56.04305766162403,
+   'logDice': 9.893377580466206,
+   'RawCount': 11}),
+ ('臺灣', '國立',
+  {'FisherAttract': 25.040705008265565,
+   'logDice': 9.532394449917003,
+   'RawCount': 4}),
+ ('臺灣', '聯盟',
+  {'FisherAttract': 22.922605012581965,
+   'logDice': 9.36337537945635,
+   'RawCount': 4})]
 ```
