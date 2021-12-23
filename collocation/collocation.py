@@ -61,7 +61,7 @@ class Collocation:
         if isinstance(n, int):
             return sorted(candidates, key=lambda x: x[-1][by], reverse=True)[:n]
         else:
-            sorted(candidates, key=lambda x: x[-1], reverse=True)
+            sorted(candidates, key=lambda x: x[-1][by], reverse=True)
 
 
     def association(self, node, collocate, cutoff, alpha):
