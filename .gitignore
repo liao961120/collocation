@@ -4,4 +4,4 @@ build
 dist
 __pycache__
 .ipynb_checkpoints
-sampled_PTTposts.txt
+test/sampled_PTTposts.txt
